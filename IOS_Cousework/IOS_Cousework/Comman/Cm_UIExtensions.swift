@@ -1,0 +1,250 @@
+//
+//  Cm_UIExtensions.swift
+//  IOS_Cousework
+//
+//  Created by Dilmi on 2024-03-16.
+//
+
+import SwiftUI
+
+// Common font style create
+enum Gilroy: String {
+    case regular = "Gilroy-Regular"
+    case medium = "Gilroy-Medium"
+    case semibold = "Gilroy-SemiBold"
+    case bold = "Gilroy-Bold"
+}
+extension Font
+{
+    static func customfont(_ font: Gilroy, fontsize: CGFloat) -> Font {
+        custom(font.rawValue, size: fontsize)
+    }
+}
+
+// end
+
+//comman Color themes creation
+extension Color
+{
+    static var primaryApp: Color
+    {
+        return Color(hex: "538175")
+    }
+    
+    static var primaryText: Color
+    {
+        return Color(hex: "030303")
+    }
+
+    static var textTitle: Color
+    {
+        return Color(hex: "7C7C7C")
+    }
+    
+    static var textColor_signUp: Color
+    {
+        return Color(hex: "008080")
+    }
+    
+    init(hex: String)
+    {
+        let hex = hex.trimmingCharacters(in: .alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b:UInt64
+        switch hex.count
+        {
+        case 3:
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6:
+            (a,r,g,b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8:
+            (a,r,g,b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (1, 1, 1, 0)
+        }
+        
+        self.init(.sRGB,
+                  red: Double(r) / 255,
+                  green: Double(g) / 255,
+                  blue: Double(b) / 255, opacity: Double(a) / 255)
+    }
+}
+
+extension CGFloat
+{
+    
+    static var screenWidth: Double
+    {
+        return UIScreen.main.bounds.size.width
+    }
+    
+    static var screenHeight: Double
+    {
+        return UIScreen.main.bounds.size.height
+    }
+    
+    static func widthPer(per: Double) -> Double
+    {
+        return screenWidth * per
+    }
+    
+    static func heightPer(per: Double) -> Double
+    {
+        return screenHeight * per
+    }
+    
+    static var bottomInsets: Double
+    {
+        if let keywindows = UIApplication.shared.keyWindow
+        {
+            return keywindows.safeAreaInsets.bottom
+        }
+        return 0.0
+    }
+    
+    static var topInsets: Double
+    {
+        if let keywindows = UIApplication.shared.keyWindow
+        {
+            return keywindows.safeAreaInsets.top
+        }
+        return 0.0
+    }
+}
+
+struct Showbutton: ViewModifier
+{
+    @Binding var isShow: Bool
+    public func body(content: Content) -> some View
+    {
+        HStack
+        {
+            content
+            Button
+            {
+                isShow.toggle()
+            } label:
+            {
+                Image(systemName: isShow ? "eye.fill" : "eye.slash.fill")
+                    .foregroundColor(.textTitle)
+            }
+        }
+    }
+}
+
+//ItemListBox creation
+
+
+//HomeScreen Footer Button List
+struct Home_Footer: View 
+{
+    @State var title: String = "Title_name"
+    @State var icon: String = "shop" //ImageName here
+    
+    var isselect: Bool = false
+    var didselect: (()->())
+    
+    var body: some View
+    {
+        Button
+        {
+            debugPrint("Tab Button Tap")
+            didselect()
+        }label:
+        {
+            VStack
+            {
+                Image(icon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 25, height: 25)
+                
+                Text(title)
+                    .font(Font.custom("Calibri", size: 14))
+            }
+        }
+        .foregroundColor(isselect ? .primaryApp : .primaryText)
+        .frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxWidth: .infinity)
+    }
+}
+
+struct FooterButton_Previews: PreviewProvider
+{
+    static var previews: some View
+    {
+        Home_Footer
+        {
+            print("Test")
+        }
+    }
+}
+
+struct SearchTextField: View 
+{
+    @State var _placeHolder: String = "placeholder"
+    @Binding var _txt: String
+    var body: some View
+    {
+        HStack(spacing: 15)
+        {
+            Image("Explore")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 20, height: 20)
+            
+            TextField(_placeHolder, text: $_txt)
+                .font(Font.custom("Calibri", size: 17))
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxWidth: .infinity)
+        }
+        .frame(height: 30)
+        .padding(15)
+        .background(Color(hex: "F2F3F2"))
+        .cornerRadius(16)
+    }
+}
+
+struct SearchTextField_Previews: PreviewProvider
+{
+    @State static var txt: String = ""
+    static var previews: some View
+    {
+        SearchTextField(_placeHolder: "Search Store", _txt: $txt)
+            .padding(15)
+    }
+}
+
+struct SectionTitleAll: View 
+{
+    @State var title: String = "Title"
+    @State var titleAll: String = "View All"
+    var didTap : (()->())?
+    
+    var body: some View
+    {
+        HStack
+        {
+            Text(title)
+                .font(.customfont(.semibold, fontsize: 24))
+                .foregroundColor(.primaryText)
+            
+            Spacer()
+            
+            Text(titleAll)
+                .font(.customfont(.semibold, fontsize: 16))
+                .foregroundColor(.primaryApp)
+        }
+        .frame(height: 40)
+    }
+}
+
+struct SectionTitle_Previews: PreviewProvider
+{
+    static var previews: some View
+    {
+        SectionTitleAll()
+            .padding(20)
+    }
+}
