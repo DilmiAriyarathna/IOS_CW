@@ -32,5 +32,5 @@ struct ProductModel: Identifiable, Equatable
     var neckline: String = ""
     var sleevlength: String = ""
     var colors: String = ""
-    //var name: String = ""
+    var adname: String = ""
 }
