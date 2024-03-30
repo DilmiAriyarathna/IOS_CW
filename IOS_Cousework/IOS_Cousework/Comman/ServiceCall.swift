@@ -14,7 +14,7 @@ class ServiceCall
     {
         DispatchQueue.global(qos: .userInitiated).async {
            
-            var parameterData = NSMutableData()
+            let parameterData = NSMutableData()
             let dictKey = parameter.allKeys as! [String]
             
             var i = 0;
@@ -37,10 +37,14 @@ class ServiceCall
                                                     //cachePolicy: .useProtocolCachePolicy,
                                                 //timeoutInterval: 10.0)
             
-            //if(isToken)
-            //{
-                //request.addValue( Main_ViewModel.shared.userObj.authToken, forHTTPHeaderField: "access_token")
-            //}
+            if(isToken)
+            {
+                #if DEBUG
+                request.addValue( "", forHTTPHeaderField: "")
+                #else
+                request.addValue( Main_ViewModel.shared.userObj.authToken, forHTTPHeaderField: "")
+                #endif
+            }
             
             request.httpMethod = "POST"
             //request.allHTTPHeaderFields = headers

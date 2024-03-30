@@ -50,8 +50,8 @@ struct Home_View: View
                             index in
                             Cm_productList
                             {
-                                
                             }
+                            //})
                         }
                     }
                     .padding(.horizontal, 20)

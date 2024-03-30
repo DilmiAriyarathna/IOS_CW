@@ -48,12 +48,12 @@ struct Login_Window: View
                     .font(Font.custom("Calibri", size: 16))
                     .frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, 25)
-
+                
                 VStack
                 {
                     Cm_TextField(title: "User Name", placeholder: "Enter your user name here..",txt: $loginVM.txtUserName, keyboardType: .emailAddress)
                         .padding(.bottom, 20)
-                                                        
+                    
                     Cm_SecureField(title: "Password", placeholder: "Enter your password here..", txt: $loginVM.txtPassword, isShowPassword: $loginVM.isShowPassword)
                 }
                 
@@ -70,16 +70,14 @@ struct Login_Window: View
                     .padding(.top, 25)
                 }
                 
-                HStack
-                {
-                    Text("Don't have an account?")
-                        .foregroundColor(.black.opacity(0.5))
-                    
-                    Button(action:
-                            {
-                        //print("Signup button tapped")
-                    })
+                NavigationLink{
+                    Signup_vw()
+                }label: {
+                    HStack
                     {
+                        Text("Don't have an account?")
+                            .foregroundColor(.black.opacity(0.5))
+                        
                         Text("Signup")
                             .foregroundColor(.textColor_signUp)
                     }

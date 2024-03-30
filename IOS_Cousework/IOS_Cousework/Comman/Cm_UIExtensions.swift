@@ -36,6 +36,11 @@ extension Color
         return Color(hex: "030303")
     }
 
+    static var secondaryText: Color
+    {
+        return Color(hex: "828282")
+    }
+    
     static var textTitle: Color
     {
         return Color(hex: "7C7C7C")
@@ -44,6 +49,11 @@ extension Color
     static var textColor_signUp: Color
     {
         return Color(hex: "008080")
+    }
+    
+    static var placeholder: Color
+    {
+        return Color(hex: "B1B1B1")
     }
     
     init(hex: String)
@@ -246,5 +256,23 @@ struct SectionTitle_Previews: PreviewProvider
     {
         SectionTitleAll()
             .padding(20)
+    }
+}
+
+extension View
+{
+    func cornerRadius(_ radius: CGFloat, corner: UIRectCorner) -> some View{
+        clipShape(RoundedCorner(radius: radius, corers: corner))
+    }
+}
+
+struct RoundedCorner: Shape
+{
+    var radius: CGFloat = .infinity;
+    var corers: UIRectCorner = .allCorners;
+    
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corers, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
     }
 }

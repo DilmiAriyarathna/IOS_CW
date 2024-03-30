@@ -18,8 +18,32 @@ class Main_ViewModel: ObservableObject
     @Published var showError = false
     @Published var errorMessage = ""
     @Published var txtUserEmail: String = ""
-    //@Published var txtPassword: String = ""
+    @Published var isUserLogin: Bool = false
+    @Published var userObj: UserModel = UserModel(dict: [:])
     
+    init() {
+           
+           
+        if( Utils.UDValueBool(key: Globs.userLogin) ) {
+                // User Login
+                self.setUserData(uDict: Utils.UDValue(key: Globs.userPayload) as? NSDictionary ?? [:] )
+            }else{
+                // User Not Login
+            }
+           
+            #if DEBUG
+            txtUserName = "dilmi"
+            txtUserEmail = "test6@gmail.com"
+            txtPassword = "12345"
+            #endif
+           
+        }
+       
+        func logout(){
+            Utils.UDSET(data: false, key: Globs.userLogin)
+            isUserLogin = false
+        }
+
     //MARK: ServiceCall
     func serviceCallLogin()
     {
@@ -56,6 +80,20 @@ class Main_ViewModel: ObservableObject
         self.errorMessage = error?.localizedDescription ?? "Fail"
         self.showError = true
         }
+    }
+    
+    func setUserData(uDict: NSDictionary)
+    {
+        Utils.UDSET(data: uDict, key: Globs.userPayload)
+        Utils.UDSET(data: uDict, key: Globs.userLogin)
+        
+        self.userObj = UserModel(dict: uDict)
+        self.isUserLogin = true
+        
+        self.txtUserName=""
+        self.txtPassword=""
+        self.txtUserEmail=""
+        self.isShowPassword = false
     }
 }
 

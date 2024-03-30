@@ -17,7 +17,7 @@ struct Welcome_Window: View
     {
         if isActive
         {
-            Login_Window()
+            MyCartView()
         }
         else
         {

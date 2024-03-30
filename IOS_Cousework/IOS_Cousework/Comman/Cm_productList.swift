@@ -6,9 +6,35 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
-struct Cm_productList: View 
+struct Cm_productList: View
 {
+    @State var pObj:ProductModel = ProductModel(dict: ["id": 1,
+                                                       "mcat": "Men Clothes",
+                                                       "scat": "Tshirt",
+                                                       "brand": "No Brand",
+                                                       "type": "Regular",
+                                                       "name": "Long Sleev Men's Balck TShirt",
+                                                       "quantity": 1,
+                                                       "price": "RS. 3590.00",
+                                                       "details": "Step out in style and charm in this round neck, full sleevs T-Shirt Add this upper stylish and super comfotable t-shirt to your collectionof T-Shirts. This is creafted using the fine quality soft cotton blend fabric. Wear this T-Shirt in spring and summers. Fabric & Carer: Made with Knitted Cotton Blend Fabric: Regular Machine wash",
+                                                       "unitname": "T-Shirt",
+                                                       "unitvalue": "1",
+                                                       "image": "https://static-01.daraz.lk/p/970102dd9f884715f0c7a0d3baa56eb2.png",
+                                                       "size": "S | M | L | XL",
+                                                       "variations": "",
+                                                       "clothingmeterial": "Cotton",
+                                                       "sleeves": "LOng Sleeve",
+                                                       "dressshape": "",
+                                                       "collartype": "O-Neck",
+                                                       "boxcontent": "1 x T-Shirt",
+                                                       "sizeimg": "",
+                                                       "neckline": "Round",
+                                                       "sleevlength": "Long",
+                                                       "colors": "Black | White"
+])
+    //
     var didAddCart: ( ()->() )?
     
     
@@ -23,13 +49,13 @@ struct Cm_productList: View
             
             Spacer()
             
-            Text("Test Product Name")
+            Text("Long Sleev Men's Balck TShirt")
                 .font(.customfont(.bold, fontsize: 16))
                 .bold()
                 .foregroundColor(.primaryText)
                 .frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxWidth: .infinity, alignment: .leading)
             
-            Text("test second menu")
+            Text("1 x T-Shirt")
                 .font(.customfont(.medium, fontsize: 14))
                 .foregroundColor(.primaryText)
                 .frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxWidth: .infinity, alignment: .leading)
